@@ -1,0 +1,92 @@
+{
+  "name": "Echo - Sparring Partner IA",
+  "short_name": "Echo",
+  "description": "Votre sparring-partner IA pour professionnels de la vente. Entraînement, coaching et débriefing avec transcription vocale avancée.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "fr-FR",
+  "icons": [
+    {
+      "src": "/echo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/echo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/echo.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/echo.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/echo.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/echo.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity", "education"],
+  "screenshots": [
+    {
+      "src": "/echo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nouvelle Simulation",
+      "short_name": "Simulation",
+      "description": "Commencer un nouveau jeu de rôle de vente",
+      "url": "/?mode=simulation",
+      "icons": [
+        {
+          "src": "/echo.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Débriefing",
+      "short_name": "Débrief",
+      "description": "Analyser une conversation de vente",
+      "url": "/?mode=debrief",
+      "icons": [
+        {
+          "src": "/echo.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "prefer_related_applications": false
+}

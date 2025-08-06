@@ -4,6 +4,7 @@ import { Message, MessageSender, AppMode, SimulationContext, SimulationSetupStep
 import ChatWindow from './components/ChatWindow';
 import * as geminiService from './services/geminiService';
 import { AICoachIcon, SpeakerWaveIcon, SpeakerXMarkIcon } from './components/icons';
+import { initPWA, installPWA, isPWAInstalled } from './src/pwa';
 
 const INITIAL_MESSAGE: Message = {
     id: 'init-1',
@@ -27,6 +28,7 @@ const App: React.FC = () => {
     const [setupStep, setSetupStep] = useState<SimulationSetupStep>(SimulationSetupStep.Topic);
     const [isLoading, setIsLoading] = useState(false);
     const [isSpeechSynthesisEnabled, setIsSpeechSynthesisEnabled] = useState(true);
+    const [showInstallButton, setShowInstallButton] = useState(false);
     
     const addMessage = (sender: MessageSender, text: string) => {
         setMessages(prev => [...prev, {
@@ -54,6 +56,25 @@ const App: React.FC = () => {
             synth.speak(utterance);
         }
     }, [messages, isSpeechSynthesisEnabled]);
+
+    // Effect pour initialiser la PWA
+    useEffect(() => {
+        initPWA();
+        
+        // Vérifier si l'app peut être installée
+        const handleBeforeInstallPrompt = () => {
+            setShowInstallButton(!isPWAInstalled());
+        };
+        
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        
+        // Vérifier immédiatement si déjà installée
+        setShowInstallButton(!isPWAInstalled());
+        
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
+    }, []);
 
     const handleSimulationSetup = useCallback((userInput: string) => {
         let nextStep = setupStep;
@@ -166,13 +187,25 @@ const App: React.FC = () => {
                         Echo: Votre Sparring-Partner IA
                     </h1>
                 </div>
-                <button 
-                    onClick={toggleSpeechSynthesis} 
-                    className="p-2 rounded-full hover:bg-gray-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500"
-                    aria-label={isSpeechSynthesisEnabled ? "Désactiver la synthèse vocale" : "Activer la synthèse vocale"}
-                >
-                    {isSpeechSynthesisEnabled ? <SpeakerWaveIcon /> : <SpeakerXMarkIcon />}
-                </button>
+                <div className="flex items-center gap-2">
+                    {showInstallButton && (
+                        <button
+                            id="pwa-install-button"
+                            onClick={installPWA}
+                            className="px-3 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500"
+                            aria-label="Installer l'application"
+                        >
+                            📱 Installer
+                        </button>
+                    )}
+                    <button 
+                        onClick={toggleSpeechSynthesis} 
+                        className="p-2 rounded-full hover:bg-gray-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500"
+                        aria-label={isSpeechSynthesisEnabled ? "Désactiver la synthèse vocale" : "Activer la synthèse vocale"}
+                    >
+                        {isSpeechSynthesisEnabled ? <SpeakerWaveIcon /> : <SpeakerXMarkIcon />}
+                    </button>
+                </div>
             </header>
             <main className="flex-grow overflow-hidden">
                  <ChatWindow
