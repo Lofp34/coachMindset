@@ -1,0 +1,38 @@
+# Fichiers à ignorer lors du déploiement Vercel
+
+# Dépendances
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Fichiers de développement
+.env.local
+.env.development
+.env.test
+
+# Fichiers de build locaux
+dev-dist/
+.vite/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Documentation de déploiement (optionnel)
+DEPLOY.md
+
+# Tests
+coverage/
+*.test.js
+*.spec.js
