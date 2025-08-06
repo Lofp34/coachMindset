@@ -1,0 +1,8 @@
+
+{
+  "name": "Echo: AI Sparring Partner",
+  "description": "An AI-powered mental gym for sales professionals. Practice difficult conversations, get real-time feedback, and strengthen your sales mindset in a safe, controlled environment.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
