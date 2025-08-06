@@ -1,0 +1,93 @@
+---
+alwaysApply: true
+description: Bonnes pratiques de développement pour ce projet
+---
+
+# 🛠️ Bonnes Pratiques de Développement
+
+## 📋 **Conventions de Code**
+
+### TypeScript Strict
+- Toujours typer les interfaces dans [types.ts](mdc:types.ts)
+- Utiliser les enums pour les constantes (`MessageSender`, `AppMode`)
+- Interfaces explicites pour les props de composants
+
+### React Patterns
+```javascript
+// ✅ Hooks modernes avec cleanup
+useEffect(() => {
+  // setup
+  return () => {
+    // cleanup
+  };
+}, [dependencies]);
+
+// ✅ useRef pour éléments DOM et valeurs persistantes
+const elementRef = useRef<HTMLElement>(null);
+const valueRef = useRef<boolean>(false);
+```
+
+## 🔧 **Gestion d'État Optimisée**
+
+### État Local vs Global
+- `useState` pour état composant local
+- `useRef` pour valeurs ne nécessitant pas de re-render
+- Pas de store global (Redux/Zustand) - Simplicité maintenue
+
+### Memoization Sélective
+```javascript
+const handleSomething = useCallback(() => {
+  // logique métier
+}, [dependencies]);
+```
+
+## 🌍 **Variables d'Environnement**
+
+### Configuration Vite
+```javascript
+// vite.config.ts
+define: {
+  'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+  'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+}
+```
+
+### Sécurité
+- Clés API JAMAIS dans le code source
+- Utiliser `.env.local` pour développement
+- Variables publiques uniquement
+
+## 🎯 **Performance**
+
+### Optimisations Appliquées
+- Lazy loading des composants si nécessaire
+- Throttling/debouncing pour événements fréquents
+- Cleanup proper des listeners et timers
+
+### Bundle Optimisé
+- Vite avec tree-shaking automatique
+- Imports spécifiques : `import { specific } from 'library'`
+- Code splitting naturel avec dynamic imports
+
+## 🧪 **Debugging & Monitoring**
+
+### Console Strategic
+```javascript
+// ⚠️ IMPORTANT : Ne pas supprimer certains console.log
+console.log(newUtt); // Fixe les problèmes onend de Speech API
+```
+
+### Error Boundaries
+Gestion d'erreurs gracieuse dans tous les services API.
+
+## 📦 **Déploiement**
+
+### Scripts NPM
+- `npm run dev` - Développement local
+- `npm run build` - Production build  
+- `npm run preview` - Preview build local
+
+### Repository
+- Git hooks propres
+- Messages de commit descriptifs
+- Branches feature si développement collaboratif

@@ -1,0 +1,30 @@
+---
+alwaysApply: true
+description: Vue d'ensemble du projet Echo AI Sparring Partner
+---
+
+# Echo AI Sparring Partner - Architecture & Contexte
+
+## 🎯 **Objectif du Projet**
+Application de sparring-partner IA pour professionnels de la vente, basée sur les 7 principes du mindset de vente. L'IA joue différents rôles selon les besoins : simulation de prospects, coaching, débriefing.
+
+## 📁 **Structure du Projet**
+- **Point d'entrée :** [index.tsx](mdc:index.tsx) charge [App.tsx](mdc:App.tsx)
+- **Configuration :** [vite.config.ts](mdc:vite.config.ts) gère les variables d'environnement
+- **Composants :** [components/ChatWindow.tsx](mdc:components/ChatWindow.tsx) (interface principale)
+- **Services :** [services/geminiService.ts](mdc:services/geminiService.ts) (logique IA)
+- **Types :** [types.ts](mdc:types.ts) définit les interfaces TypeScript
+
+## 🚀 **Technologies**
+- **React 19.1.1** avec hooks modernes
+- **TypeScript** strict
+- **Vite 6.2.0** pour le développement
+- **API Gemini 2.5-flash** pour l'IA
+- **Web Speech API** pour transcription vocale
+
+## 📋 **Configuration Requise**
+1. `npm install` - Installer dépendances
+2. Variable `GEMINI_API_KEY` dans [.env.local](mdc:.env.local) 
+3. `npm run dev` - Lancer serveur local
+
+Le projet est maintenant hébergé sur : https://github.com/Lofp34/coachMindset.git

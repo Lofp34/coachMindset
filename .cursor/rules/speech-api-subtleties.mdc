@@ -1,0 +1,54 @@
+---
+globs: components/ChatWindow.tsx,services/geminiService.ts
+description: Subtilités critiques de l'implémentation Web Speech API
+---
+
+# 🎤 Subtilités Critiques - Web Speech API
+
+## ⚠️ **Problèmes Connus & Solutions Appliquées**
+
+### 1. **Écho/Duplication de Transcription**
+**Problème :** L'accumulation des résultats créait des répétitions terribles
+```javascript
+// ❌ MAUVAIS - Accumule les résultats
+setInputText(prev => prev + newText);
+
+// ✅ BON - Reconstruit le texte complet
+const fullText = finalTranscript + interimTranscript;
+setInputText(fullText);
+```
+
+### 2. **Gestion des Résultats isFinal vs Interim**
+```javascript
+// Récupérer TOUS les résultats finaux depuis le début (pas juste les nouveaux)
+for (let i = 0; i < event.results.length; ++i) {
+  if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript;
+}
+
+// Récupérer seulement les nouveaux résultats intermédiaires
+for (let i = event.resultIndex; i < event.results.length; ++i) {
+  if (!event.results[i].isFinal) interimTranscript += event.results[i][0].transcript;
+}
+```
+
+### 3. **Protection Contre les Résultats en Attente**
+Utilisation d'un flag `isMessageSentRef` pour éviter que des résultats vocaux re-remplissent le champ après envoi.
+
+### 4. **Configuration Critique**
+```javascript
+recognition.continuous = true;  // ESSENTIEL pour transcription continue
+recognition.interimResults = true;  // Pour feedback temps réel
+recognition.lang = 'fr-FR';  // Langue française
+```
+
+## 🔄 **Flux de Transcription Optimal**
+1. Clic micro → `recognition.start()`
+2. Résultats → Reconstruction complète du texte
+3. Envoi message → `recognition.stop()` + flag protection
+4. Nouveau clic → Réinitialisation flag + redémarrage
+
+## 📱 **Compatibilité**
+- Chrome/Edge : Support complet
+- Firefox : Support limité
+- Safari : Support partiel
+- Mobile : Variable selon navigateur

@@ -1,0 +1,87 @@
+---
+globs: components/*.tsx,App.tsx,index.html
+description: Patterns UX/UI et interactions utilisateur optimisées
+---
+
+# 🎨 Patterns UX/UI - Interactions Optimisées
+
+## 🎤 **Interface Vocale Avancée**
+
+### Feedback Visuel État Micro
+```javascript
+className={`... ${isListening ? 'bg-red-600 animate-pulse' : 'bg-gray-600 hover:bg-gray-500'}`}
+aria-label={isListening ? "Arrêter l'enregistrement" : "Commencer l'enregistrement vocal"}
+```
+
+### Scroll Automatique Intelligent
+```javascript
+// Auto-scroll horizontal pour visibilité texte
+setTimeout(() => {
+  if (inputRef.current) {
+    inputRef.current.scrollLeft = inputRef.current.scrollWidth;
+  }
+}, 0);
+```
+
+## 🔊 **Synthèse Vocale Intégrée**
+
+### Configuration Optimale
+```javascript
+const utterance = new SpeechSynthesisUtterance(lastMessage.text);
+utterance.lang = 'fr-FR';
+// Annulation propre si nouvelle synthèse
+if (synth.speaking) synth.cancel();
+```
+
+### Contrôle Utilisateur
+Bouton toggle pour activer/désactiver la synthèse vocale avec icônes visuelles claires.
+
+## 💬 **Types de Messages Différenciés**
+
+### MessageSender Enum
+- `User` - Messages utilisateur (alignés droite, bleu)
+- `AIPersona` - Réponses du prospect simulé (gauche, gris)
+- `AICoach` - Conseils coach (gauche, couleur spéciale)
+- `System` - Messages système (gauche, style distinct)
+
+### Bulles de Messages Adaptatives
+```javascript
+// Styles conditionnels selon le sender
+className={`rounded-2xl px-4 py-3 max-w-xl ${
+  message.sender === MessageSender.User 
+    ? 'bg-blue-600 text-white self-end rounded-br-none'
+    : 'bg-gray-700 text-gray-200 self-start rounded-bl-none'
+}`}
+```
+
+## 📱 **Design Responsive**
+
+### Gradients Modernes
+```css
+bg-gradient-to-br from-gray-900 via-gray-900 to-black
+bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500
+```
+
+### Espacement Adaptatif
+- `p-4 md:p-8` - Padding responsive
+- `text-2xl md:text-3xl` - Typographie scalable
+- `gap-2 md:gap-4` - Espacement flexible
+
+## ⚡ **États de Loading**
+
+### Animation de Pensée IA
+```javascript
+<div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse delay-[0|150|300]"></div>
+```
+
+### Désactivation Conditionnelle
+```javascript
+disabled={isLoading || !inputText.trim()}
+className="... disabled:bg-gray-600 disabled:cursor-not-allowed"
+```
+
+## 🎯 **Accessibilité (A11y)**
+- Labels ARIA sur tous les boutons interactifs
+- Contraste couleurs respecté
+- Focus rings visibles
+- Feedback sonore optionnel

@@ -1,0 +1,66 @@
+---
+globs: services/geminiService.ts,App.tsx
+description: Intégration et configuration de l'API Gemini pour le sparring-partner IA
+---
+
+# 🤖 Intégration API Gemini - Subtilités Techniques
+
+## 🔧 **Configuration & Sécurité**
+```javascript
+// Variables d'environnement via Vite
+if (!process.env.API_KEY) {
+  throw new Error("API_KEY environment variable not set");
+}
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+```
+
+## 🎭 **Architecture Multi-Rôles IA**
+
+### 1. **Classification Intelligente** (`getInitialResponse`)
+L'IA analyse la demande utilisateur et décide du mode approprié :
+- `SIMULATION_SETUP` - Entraînement/jeu de rôle
+- `DEBRIEF` - Analyse conversation passée  
+- `JOURNAL` - Écriture réflexive
+- `MENTAL_PREP` - Préparation stress immédiat
+
+### 2. **Simulation Dual-Persona** (`getSimulationResponse`)
+```javascript
+// L'IA joue 2 rôles simultanément :
+// 1. Le prospect/client (persona)
+// 2. Le coach expert (commentaires méta)
+{
+  personaResponse: "Réponse du client simulé",
+  coachComment: "Conseil du coach ou null"
+}
+```
+
+### 3. **Configuration JSON Stricte**
+```javascript
+responseMimeType: "application/json",
+responseSchema: { 
+  type: Type.OBJECT,
+  properties: { /* Structure définie */ }
+}
+```
+
+## 📚 **Système d'Instructions Contextuelles**
+
+### Base Système
+```javascript
+const systemInstructionBase = `Vous êtes Echo, un sparring-partner et coach IA pour les professionnels de la vente. Votre but est d'aider les utilisateurs à s'entraîner, à débriefer et à renforcer leur mindset de vente. Vous vous basez sur les 7 principes du mindset de vente: ${salesMindsetPrinciples}`;
+```
+
+### 7 Principes du Mindset Intégrés
+1. Résilience face au rejet
+2. Orientation client et valeur
+3. Confiance en soi
+4. Mentalité proactive
+5. Apprentissage continu
+6. Gestion énergie/bien-être
+7. Abondance et gratitude
+
+## ⚡ **Gestion d'Erreurs Robuste**
+Chaque fonction a un fallback gracieux en cas d'erreur API, maintenant l'expérience utilisateur fluide.
+
+## 🔄 **Modèle Utilisé**
+`gemini-2.5-flash` - Optimisé pour conversations interactives rapides et coaching en temps réel.
